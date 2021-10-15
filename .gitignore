@@ -15,19 +15,19 @@
 *.tar.gz
 *.rar
 
-# JRebel
-*rebel.xml
-*rebel-remote.xml
-*nb_jr_remoting.cfg
-
 # MAVEN
-classes/
-target/
+**/classes/
+**/target/
+
+#Gradle
+**/build/
+**/.gradle/
 
 # Eclipse
 *.settings
 *.classpath
 *.project
+*.prefs
 
 # IDEA
 *.idea

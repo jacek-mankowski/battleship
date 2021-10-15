@@ -1,0 +1,45 @@
+apply plugin: 'java'
+apply plugin: 'application'
+
+repositories {
+	mavenLocal()
+	mavenCentral()
+}
+
+application {
+	application.applicationName = 'battleship'
+	mainClass = 'com.fulcrum.battleship.Main'
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(11)
+	}
+}
+
+tasks.withType(JavaCompile) {
+	options.encoding = 'UTF-8'
+}
+
+jar {
+	archiveBaseName.set(application.applicationName)
+	archiveExtension.set('jar')
+	manifest {
+		attributes(
+			'Built-By'       : System.properties.getProperty('user.name'),
+			'Build-Timestamp': new java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSSZ").format(new Date()),
+			'Built-With'     : "Gradle ${gradle.gradleVersion}",
+			'Build-Jdk'      : "${System.properties.getProperty('java.version')} (${System.properties.getProperty('java.vendor')} ${System.properties.getProperty('java.vm.version')})",
+			'Build-OS'       : "${System.properties.getProperty('os.name')} ${System.properties.getProperty('os.arch')} ${System.properties.getProperty('os.version')}",
+			'Main-Class'     : application.mainClass,
+		)
+	}
+}
+
+run {
+    standardInput = System.in
+}
+
+tasks.register("allDeps", DependencyReportTask) {
+	setConfiguration("runtimeClasspath")
+}
